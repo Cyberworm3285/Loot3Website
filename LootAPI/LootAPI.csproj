@@ -13,14 +13,13 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0-msbuild3-final" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Loot3Framework">
-      <HintPath>..\..\..\..\..\Source\Repos\Loot3Framework\Loot3Framework\bin\Debug\Loot3Framework.dll</HintPath>
+      <HintPath>..\..\Loot3Framework\Loot3Framework\bin\Debug\Loot3Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
 
