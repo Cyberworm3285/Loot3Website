@@ -8,6 +8,7 @@ using Loot3Framework.Types.Classes.BaseClasses;
 using Loot3Framework.Types.Classes.Algorithms.TypeFetching;
 using Loot3Framework.Types.Classes.Algorithms.Looting;
 using Loot3Framework.Types.Classes.Algorithms.Filter;
+using Loot3Framework.Types.Classes.RarityTables;
 
 using LootAPI.Models;
 
@@ -51,8 +52,9 @@ namespace LootAPI.LootLogic
 
         public ItemWrapper GetConfiguredLoot()
         {
+            PR_PartionLoot<string> looter = new PR_PartionLoot<string>(new DefaultRarityTable());
             ILootable<string> item =  GetLoot(
-                    new RandomLoot<string>(),
+                    looter,
                     new ConfigurableFilter(
                             _nameContains:      config.Name,
                             _typeContains:      config.TypeContains,
@@ -64,11 +66,12 @@ namespace LootAPI.LootLogic
                         )
                 );
             ItemWrapper result = new ItemWrapper() {
-                Item =      item.Item,
-                Rarity =    item.Rarity,
-                RarName =   item.RarityName,
-                Name=       item.Name,
-                Type=       item.Type
+                Item =          item.Item,
+                Rarity =        item.Rarity,
+                RarName =       item.RarityName,
+                Name=           item.Name,
+                Type=           item.Type,
+                Probobility=    looter.LastProbability
             };
 
             return result;

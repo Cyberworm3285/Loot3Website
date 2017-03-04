@@ -12,5 +12,6 @@ namespace LootAPI.Models
         public int Rarity { get; set; }
         public string RarName { get; set; }
         public string Type { get; set; }
+        public double Probobility { get; set; }
     }
 }
