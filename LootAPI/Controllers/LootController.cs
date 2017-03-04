@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-using TestApi.LootLogic;
 using Loot3Framework.Types.Classes.Algorithms.Looting;
+
+using LootAPI.LootLogic;
 
 namespace TestApi.Controllers
 {
@@ -23,10 +24,9 @@ namespace TestApi.Controllers
         }
 
         [HttpGet]
-        public ContentResult SampleJSON()
+        public JsonResult SampleJSON()
         {
-            ItemDataWrapper wrapper = new ItemDataWrapper() { lowerRar = 0, name = "dummy", rarName = "normal", type = "dummytype", upperRar = 1000 };
-            return Content(wrapper.ToJSON());
+            return Json(LootHandler.Instance.GetConfiguredLoot());
         }
 
         #region Old

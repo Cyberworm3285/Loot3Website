@@ -8,7 +8,7 @@ using Loot3Framework.Interfaces;
 using Loot3Framework.Types.Classes.ItemProperties;
 using Loot3Framework.Types.Structs;
 
-namespace TestApi.LootLogic.Items
+namespace LootAPI.LootLogic.Items
 {
     public class Item_01 : BasePP_StringItem
     {
