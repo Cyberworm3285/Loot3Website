@@ -4,29 +4,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-using Loot3Framework.Types.Classes.Algorithms.Looting;
+using Newtonsoft.Json;
+
+using Loot3Framework.ExtensionMethods.CollectionOperations;
 
 using LootAPI.LootLogic;
+using LootAPI.Models;
 
 namespace TestApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Looting")]
     public class LootController : Controller
     {
-        //[HttpGet]
-        public ContentResult Loot()
+        [HttpGet("Get")]
+        public JsonResult Loot()
         {
-            string result = LootHandler.Instance.GetLoot(
-                    new RandomLoot<string>()
-                ).Item;
-
-            return Content(result);
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.Formatting = Formatting.Indented;
+            return Json(LootHandler.Instance.GetConfiguredLoot(),settings);
         }
 
-        [HttpGet]
-        public JsonResult SampleJSON()
+        [HttpGet("Get/{c}")]
+        public JsonResult Loot(int c)
         {
-            return Json(LootHandler.Instance.GetConfiguredLoot());
+            ItemWrapper[] items = new ItemWrapper[c];
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.Formatting = Formatting.Indented;
+            for (int i = 0; i < c; i++)
+            {
+                items[i] = LootHandler.Instance.GetConfiguredLoot();
+            }
+            return Json(items, settings);
         }
 
         #region Old

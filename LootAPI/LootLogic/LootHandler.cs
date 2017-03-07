@@ -52,7 +52,7 @@ namespace LootAPI.LootLogic
 
         public ItemWrapper GetConfiguredLoot()
         {
-            PR_PartionLoot<string> looter = new PR_PartionLoot<string>(new DefaultRarityTable());
+            PR_PartionLoot<string, PartitionLoot<string>> looter = new PR_PartionLoot<string, PartitionLoot<string>>(DefaultRarityTable.SharedInstance, PartitionLoot<string>.SharedInstance);
             ILootable<string> item =  GetLoot(
                     looter,
                     new ConfigurableFilter(
@@ -66,12 +66,14 @@ namespace LootAPI.LootLogic
                         )
                 );
             ItemWrapper result = new ItemWrapper() {
-                Item =          item.Item,
-                Rarity =        item.Rarity,
-                RarName =       item.RarityName,
-                Name=           item.Name,
-                Type=           item.Type,
-                Probobility=    looter.LastProbability
+                Item =              item.Item,
+                Rarity =            item.Rarity,
+                RarName =           item.RarityName,
+                Name =              item.Name,
+                Type =              item.Type,
+                Probability =       looter.LastProbability,
+                allItemNames =      looter.InnerAlgorithm.LastItemNames,
+                allItemRarities =   looter.InnerAlgorithm.LastItemRarities
             };
 
             return result;
