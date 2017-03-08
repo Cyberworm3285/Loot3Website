@@ -52,30 +52,49 @@ namespace LootAPI.LootLogic
 
         public ItemWrapper GetConfiguredLoot()
         {
-            PR_PartionLoot<string, PartitionLoot<string>> looter = new PR_PartionLoot<string, PartitionLoot<string>>(DefaultRarityTable.SharedInstance, PartitionLoot<string>.SharedInstance);
-            ILootable<string> item =  GetLoot(
-                    looter,
-                    new ConfigurableFilter(
-                            _nameContains:      config.Name,
-                            _typeContains:      config.TypeContains,
-                            _rarityName:        config.RarContains,
-                            _allowedRarities:   config.AllowedRars,
-                            _allowedTypes:      config.AllowedTypes,
-                            _rarityLowerBound:  config.LowerRar,
-                            _rarityUpperBound:  config.UpperRar
-                        )
-                );
-            ItemWrapper result = new ItemWrapper() {
-                Item =              item.Item,
-                Rarity =            item.Rarity,
-                RarName =           item.RarityName,
-                Name =              item.Name,
-                Type =              item.Type,
-                Probability =       looter.LastProbability,
-                allItemNames =      looter.InnerAlgorithm.LastItemNames,
-                allItemRarities =   looter.InnerAlgorithm.LastItemRarities
-            };
-
+            ItemWrapper result;
+            try
+            {
+                PR_PartionLoot<string, PartitionLoot<string>> looter = new PR_PartionLoot<string, PartitionLoot<string>>(DefaultRarityTable.SharedInstance, PartitionLoot<string>.SharedInstance);
+                ILootable<string> item = GetLoot(
+                        looter,
+                        new ConfigurableFilter(
+                                _nameContains: config.Name,
+                                _typeContains: config.TypeContains,
+                                _rarityName: config.RarContains,
+                                _allowedRarities: config.AllowedRars,
+                                _allowedTypes: config.AllowedTypes,
+                                _rarityLowerBound: config.LowerRar,
+                                _rarityUpperBound: config.UpperRar
+                            )
+                    );
+                result = new ItemWrapper()
+                {
+                    Item = item.Item,
+                    Rarity = item.Rarity,
+                    RarName = item.RarityName,
+                    Name = item.Name,
+                    Type = item.Type,
+                    Probability = looter.LastProbability,
+                    AllItemNames = looter.InnerAlgorithm.LastItemNames,
+                    AllItemRarities = looter.InnerAlgorithm.LastItemRarities
+                };
+            }
+            catch (Exception)
+            {
+                result = new ItemWrapper()
+                {
+                    ErrorFlag = true,
+                    Item = null,
+                    Rarity = 0,
+                    RarName = null,
+                    Name = null,
+                    Type = null,
+                    Probability = 0.0,
+                    AllItemNames = null,
+                    AllItemRarities = null,
+                };
+            }
             return result;
         }
     }

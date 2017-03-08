@@ -15,11 +15,11 @@ namespace LootAPI.Controllers
     [Route("api/Config")]
     public class ConfigController : Controller
     {
-        //[HttpPut]
-        public void SetConfig(string json)
+        [HttpPut]
+        public ContentResult SetConfig([FromBody] ConfigWrapper config)
         {
-            ConfigWrapper wrapper = DeserializeObject<ConfigWrapper>(json);
-            LootHandler.SetConfig(wrapper);
+            LootHandler.SetConfig(config);
+            return Content("config was set.");
         }
 
         [HttpGet]
